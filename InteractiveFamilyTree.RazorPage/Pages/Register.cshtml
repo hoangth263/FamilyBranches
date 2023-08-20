@@ -1,0 +1,137 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Register Page</title>
+    <style>
+        .body1 {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            background-image: url("/images/hand-drawn-floral-background_23-2149011038.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container1 {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+        }
+
+        .h1-login {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .label-login {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .validation-error {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="body1">
+    <div class="container1">
+        <h1 class="h1-login">Register</h1>
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Member.FullName" class="control-label"></label>
+                <input asp-for="Member.FullName" class="form-control" />
+                <span asp-validation-for="Member.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Member.Image" class="form-control" type="hidden" value="https://cdn-icons-png.flaticon.com/512/552/552721.png" />
+                <span asp-validation-for="Member.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Member.Phone" class="control-label"></label>
+                <input asp-for="Member.Phone" class="form-control" />
+                <span asp-validation-for="Member.Phone" class="text-danger"></span>
+            </div>
+            <div class="error-message">@Model.phoneError</div>
+            <div class="form-group">
+                <label asp-for="Member.Email" class="control-label"></label>
+                <input asp-for="Member.Email" class="form-control" type="email" />
+                <span asp-validation-for="Member.Email" class="text-danger"></span>
+            </div>
+            <div class="error-message">@Model.emailError</div>
+            <div class="form-group">
+                <label asp-for="Member.Password" class="control-label"></label>
+                <input asp-for="Member.Password" class="form-control" type="password" />
+                <span asp-validation-for="Member.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="margin: 20px 0px 20px 0px">
+                <label asp-for="Member.Gender" class="control-label"></label>
+                <label>
+                    <input type="radio" asp-for="Member.Gender" value="true" /> Male
+                    <span asp-validation-for="Member.Gender" class="text-danger"></span>
+                </label>
+
+                <label>
+                    <input type="radio" asp-for="Member.Gender" value="false" /> Female
+                    <span asp-validation-for="Member.Gender" class="text-danger"></span>
+                </label>
+
+            </div>
+            <div class="form-group" style="margin-bottom: 20px">
+                <label asp-for="Member.Birthday" class="control-label"></label>
+                <input asp-for="Member.Birthday" class="form-control" type="date" min="1900-01-01" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Member.Birthday" class="text-danger"></span>
+            </div>
+            @if (TempData["Message"] != null)
+            {
+                <div class="error-message">@TempData["Message"]</div>
+            }
+            <div>
+                <input type="submit" value="Register" />
+            </div>
+            @*<img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="Image">*@
+        </form>
+        <br />
+        <div>
+            <a class="" asp-page="/login" >Have an account? Login</a>
+        </div>
+    </div>
+</body>
+</html>

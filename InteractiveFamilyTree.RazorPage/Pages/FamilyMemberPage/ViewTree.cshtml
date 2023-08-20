@@ -1,0 +1,80 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyMemberPage.ViewTreeModel
+
+@{
+    ViewData["Title"] = "ViewTree";
+}
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<h1>ViewTree</h1>
+<table class="bordered table">
+    @for(int i = Model.Oldest; i <= Model.Youngest; i++)
+    {
+       
+        <tr>
+            <td>  <h4>Genegration: @i</h4></td>
+            @for(int j=0; j <= Model.Tree.Length; j++)
+            {
+               
+                @if (Model.Tree[i, j] != 0)
+                {
+                    <td>
+                        @if (Model.TreeMember[i, j].Gender)
+                        {
+                            <h4 style="color: blue" >
+                                @Model.TreeMember[i,j].FullName
+
+                            </h4>
+                            <h4>
+                                Birthday:  @Model.TreeMember[i,j].Birthday.Date.Day / @Model.TreeMember[i, j].Birthday.Date.Month / @Model.TreeMember[i, j].Birthday.Date.Year<br/>
+                                Health : @Model.TreeMember[i,j].StatusHealth
+                            </h4>
+                            @if (Model.Love[Model.TreeMember[i, j].Id]!=null)
+                            {
+                                <h4>Couple: <i class="fas fa-heart-circle-check" style="line-height: 1; color: #@Model.Love[Model.TreeMember[i, j].Id];"></i></h4>
+
+                            }
+                            @if (Model.ChildParent[Model.TreeMember[i, j].Id, 0]!=null)
+                            {
+                                <h4>Parent of: <i class="fas fa-people-roof" style="line-height: 1; color: #@Model.ChildParent[Model.TreeMember[i, j].Id,0];"></i></h4>
+
+                            }
+                            @if (Model.ChildParent[Model.TreeMember[i, j].Id, 1] != null)
+                            {
+                                <h4>Child of: <i class="fas fa-people-roof" style="line-height: 1; color: #@Model.ChildParent[Model.TreeMember[i, j].Id,1];"></i></h4>
+                            }
+
+                        }
+                        else
+                        {
+                            <h4 style="color: deeppink">
+                                @Model.TreeMember[i,j].FullName
+                            </h4>
+                            <h4>
+                                Birthday: @Model.TreeMember[i,j].Birthday.Date.Day / @Model.TreeMember[i, j].Birthday.Date.Month / @Model.TreeMember[i, j].Birthday.Date.Year<br/>
+                                Health : @Model.TreeMember[i,j].StatusHealth
+                            </h4>
+                            @if (Model.Love[Model.TreeMember[i, j].Id] != null)
+                            {
+                                <h4>Couple: <i class="fas fa-heart-circle-check" style="line-height: 1; color: #@Model.Love[Model.TreeMember[i, j].Id];"></i></h4>
+
+                            }
+                            @if (Model.ChildParent[Model.TreeMember[i, j].Id, 0] != null)
+                            {
+                                <h4>Parent of: <i class="fas fa-people-roof" style="line-height: 1; color: #@Model.ChildParent[Model.TreeMember[i, j].Id,0];"></i></h4>
+
+                            }
+                            @if (Model.ChildParent[Model.TreeMember[i, j].Id, 1] != null)
+                            {
+                                <h4>Child of: <i class="fas fa-people-roof" style="line-height: 1; color: #@Model.ChildParent[Model.TreeMember[i, j].Id,1];"></i></h4>
+                            }
+
+                       }
+                    </td>
+                    }else break;
+                
+            }
+        </tr>
+    }
+</table>

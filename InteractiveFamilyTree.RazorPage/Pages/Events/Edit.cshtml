@@ -1,0 +1,60 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>FamilyEvent</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FamilyEvent.Id" />
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Name" class="control-label"></label>
+                <input asp-for="FamilyEvent.Name" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Description" class="control-label"></label>
+                <input asp-for="FamilyEvent.Description" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.TreeId" class="control-label"></label>
+                <select asp-for="FamilyEvent.TreeId" class="form-control" asp-items="ViewBag.TreeId"></select>
+                <span asp-validation-for="FamilyEvent.TreeId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FamilyEvent.Type" /> @Html.DisplayNameFor(model => model.FamilyEvent.Type)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Date" class="control-label"></label>
+                <input asp-for="FamilyEvent.Date" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="FamilyEvent.Status" /> @Html.DisplayNameFor(model => model.FamilyEvent.Status)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,93 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyMemberPage.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+<a asp-page="/Child&Parent/Index" asp-route-id="1">Check love</a>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Generation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].StatusHealth)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Member)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FamilyMember) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Generation)
+            </td>
+                @{
+                    String birthday = item.Birthday.ToString("yyyy-MM-dd");
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => birthday)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusHealth)
+            </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>*@
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

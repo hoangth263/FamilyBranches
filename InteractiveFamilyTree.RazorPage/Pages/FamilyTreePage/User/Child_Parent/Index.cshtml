@@ -1,0 +1,40 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyTreePage.User.Child_Parent.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Child - Parent </h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ChildAndParentsRelationShip[0].Parent)
+            </th><th>
+                @Html.DisplayNameFor(model => model.ChildAndParentsRelationShip[0].Child)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ChildAndParentsRelationShip.ToList()) {
+        <tr>
+            
+               <td>
+                @Html.DisplayFor(modelItem => item.Parent.FullName)
+            </td><td>
+                @Html.DisplayFor(modelItem => item.Child.FullName)
+            </td>
+         
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

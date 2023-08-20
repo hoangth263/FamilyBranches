@@ -1,0 +1,52 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyTreePage.User.Couple.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>CoupleRelationship</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CoupleRelationship.HusbandId" class="control-label"></label>
+                <select asp-for="CoupleRelationship.HusbandId" class ="form-control" asp-items="ViewBag.HusbandId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoupleRelationship.WifeId" class="control-label"></label>
+                <select asp-for="CoupleRelationship.WifeId" class ="form-control" asp-items="ViewBag.WifeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoupleRelationship.CreateDate" class="control-label"></label>
+                <input asp-for="CoupleRelationship.CreateDate" class="form-control" />
+                <span asp-validation-for="CoupleRelationship.CreateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoupleRelationship.UpdateDate" class="control-label"></label>
+                <input asp-for="CoupleRelationship.UpdateDate" class="form-control" />
+                <span asp-validation-for="CoupleRelationship.UpdateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CoupleRelationship.MarrageStatus" class="control-label"></label>
+                <input asp-for="CoupleRelationship.MarrageStatus" class="form-control" />
+                <span asp-validation-for="CoupleRelationship.MarrageStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,191 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyMemberPage.User.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style>
+
+    /* Style for the pop-up box */
+    .popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .popup-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Style for the Copy to Clipboard button */
+    #copyButton {
+        margin-top: 10px;
+        cursor: pointer;
+    }
+
+
+</style>
+<h1>Index</h1>
+@if (User.IsInRole("manager"))
+{
+
+    <p>
+        <a asp-page="/FamilyMemberPage/Create">Create New</a>
+    </p>
+}
+
+<!-- Button to trigger the pop-up box -->
+<button id="openPopupButton">Get Invitation Code</button>
+
+<!-- The pop-up box -->
+<div id="popupBox" class="popup">
+    <div class="popup-content">
+        <button id="closeButton" onclick="closePopup()" style="background-color:red; color:aliceblue">X</button>
+        <!-- Code snippet to display -->
+        <pre style="text-align: center; font-size:20px"><code id="codeSnippet">@Model.Code</code></pre>
+
+        <!-- Copy to Clipboard button -->
+        <button id="copyButton">Copy to Clipboard</button>
+    </div>
+</div>
+<br/>
+@if (User.IsInRole("manager"))
+{
+    <a asp-page="/FamilyTreePage/User/Child_Parent/Index" asp-route-id="@Model.TreeId">Edit Relationship</a>
+}
+<a asp-page="/FamilyMemberPage/ViewTree" asp-route-id="@Model.TreeId">View your tree</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Generation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Birthday)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].StatusHealth)
+            </th>
+@*            <th>
+                @Html.DisplayNameFor(model => model.FamilyMember[0].Member)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FamilyMember) {
+    @if(item.Status){
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Generation)
+            </td>
+                @{
+                    String birthday = item.Birthday.ToString("yyyy-MM-dd");
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => birthday)
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusHealth)
+            </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>*@
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+@*                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+    }
+    </tbody>
+</table>
+
+<!-- JavaScript code to handle the pop-up box and the "Copy to Clipboard" button -->
+<script>
+    function closePopup() {
+        var popupBox = document.getElementById("popupBox");
+        popupBox.style.display = "none";
+    }
+    document.getElementById('openPopupButton').addEventListener('click', function () {
+        // Show the pop-up box
+        document.getElementById('popupBox').style.display = 'block';
+    });
+
+    document.getElementById('copyButton').addEventListener('click', function () {
+        // Get the code snippet to copy
+        var codeSnippet = document.getElementById('codeSnippet');
+
+        // Create a temporary textarea element to hold the code
+        var tempTextArea = document.createElement('textarea');
+        tempTextArea.value = codeSnippet.innerText;
+
+        // Append the textarea to the document
+        document.body.appendChild(tempTextArea);
+
+        // Select the text inside the textarea
+        tempTextArea.select();
+
+        // Copy the selected text to the clipboard
+        document.execCommand('copy');
+
+        // Remove the temporary textarea element
+        document.body.removeChild(tempTextArea);
+
+        // Hide the pop-up box after copying
+        document.getElementById('popupBox').style.display = 'none';
+
+        // Optionally, provide user feedback (e.g., a tooltip)
+        alert('Code copied to clipboard!');
+    });
+</script>

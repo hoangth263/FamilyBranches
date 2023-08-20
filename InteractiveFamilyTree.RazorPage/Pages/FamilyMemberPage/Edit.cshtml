@@ -1,0 +1,98 @@
+﻿@page
+@model             EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<style>
+    .error-message {
+        color: #ff0000;
+        font-size: 14px;
+        margin-top: 10px;
+        text-align: center;
+    }
+</style>
+<h1>Edit</h1>
+
+<h4>FamilyMember</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FamilyMember.Id" />
+            <div class="form-group">
+                <label asp-for="FamilyMember.TreeId" class="control-label"></label>
+                <select asp-for="FamilyMember.TreeId" class="form-control" asp-items="ViewBag.TreeId"></select>
+                <span asp-validation-for="FamilyMember.TreeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.MemberId" class="control-label"></label>
+                <select asp-for="FamilyMember.MemberId" class="form-control" asp-items="ViewBag.MemberId">
+                    <option value="">None</option>
+                </select>
+                <span asp-validation-for="FamilyMember.MemberId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.FullName" class="control-label"></label>
+                <input asp-for="FamilyMember.FullName" class="form-control" />
+                <span asp-validation-for="FamilyMember.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.Gender" class="control-label"></label>
+                <label>
+                    <input type="radio" asp-for="FamilyMember.Gender" value="true" /> Male
+                    <span asp-validation-for="FamilyMember.Gender" class="text-danger"></span>
+                </label>
+
+                <label>
+                    <input type="radio" asp-for="FamilyMember.Gender" value="false" /> Female
+                    <span asp-validation-for="FamilyMember.Gender" class="text-danger"></span>
+                </label>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.Generation" class="control-label"></label>
+                <input asp-for="FamilyMember.Generation" class="form-control" min="1"/>
+                <span asp-validation-for="FamilyMember.Generation" class="text-danger"></span>
+            </div>
+            <div class="error-message">@TempData["genError"]</div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.Birthday" class="control-label"></label>
+                <input asp-for="FamilyMember.Birthday" class="form-control" type="date" min="1900-01-01" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="FamilyMember.Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="FamilyMember.CreateDate" class="form-control" type="hidden"/>
+            </div>
+            <div class="form-group">
+                <input asp-for="FamilyMember.UpdateDate" type="hidden" class="form-control" value="@DateTime.Now" />
+                <span asp-validation-for="FamilyMember.UpdateDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="FamilyMember.Role"  type="hidden"/>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.Status" class="control-label"></label>
+                <input asp-for="FamilyMember.Status" class="form-check-input" type="checkbox"/>
+                <span asp-validation-for="FamilyMember.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyMember.StatusHealth" class="control-label"></label>
+                <input asp-for="FamilyMember.StatusHealth" class="form-check-input" type="checkbox" />
+                <span asp-validation-for="FamilyMember.StatusHealth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

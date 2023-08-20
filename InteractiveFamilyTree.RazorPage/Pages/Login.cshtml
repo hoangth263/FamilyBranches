@@ -1,0 +1,101 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Page</title>
+    <style>
+        .body1 {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            background-image: url("/images/hand-drawn-floral-background_23-2149011038.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .container1 {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+        }
+
+        .h1-login {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .label-login {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .validation-error {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="body1">
+    <div class="container1">
+        <h1 class="h1-login">Login</h1>
+
+        <form method="post">
+            <div>
+                <label class="label-login" for="Email">Email</label>
+                <input type="text" name="email" value="@TempData["email"]" required />
+            </div>
+            <div>
+                <label class="label-login" for="Password">Password</label>
+                <input name="password" type="password" value="@TempData["password"]" required />
+            </div>
+            @if (TempData["Message"] != null)
+            {
+                <div class="error-message">@TempData["Message"]</div>
+            }
+            <div>
+                <input type="submit" value="Login" />
+            </div>
+            @*<img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="Image">*@
+        </form>
+        <br />
+        <div>
+            <a class="" asp-page="/login" asp-page-handler="Register">Register</a>
+        </div>
+    </div>
+</body>
+</html>

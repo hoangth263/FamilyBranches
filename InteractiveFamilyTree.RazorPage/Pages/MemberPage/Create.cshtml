@@ -1,0 +1,79 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.MemberPage.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Member</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@*            <div class="form-group">
+                <label asp-for="Member.Id" class="control-label"></label>
+                <input asp-for="Member.Id" class="form-control" />
+                <span asp-validation-for="Member.Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Member.FullName" class="control-label"></label>
+                <input asp-for="Member.FullName" class="form-control" />
+                <span asp-validation-for="Member.FullName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input asp-for="Member.Image" class="form-control" type="hidden" value="https://cdn-icons-png.flaticon.com/512/552/552721.png" />
+                <span asp-validation-for="Member.Image" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Member.Phone" class="control-label"></label>
+                <input asp-for="Member.Phone" class="form-control" />
+                <span asp-validation-for="Member.Phone" class="text-danger"></span>
+            </div>
+            <span style="color: red">@Model.phoneError</span>
+            <div class="form-group">
+                <label asp-for="Member.Email" class="control-label"></label>
+                <input asp-for="Member.Email" class="form-control" type="email"/>
+                <span asp-validation-for="Member.Email" class="text-danger"></span>
+            </div>
+            <span style="color: red">@Model.emailError</span>
+            <div class="form-group">
+                <label asp-for="Member.Gender" class="control-label"></label>
+                <label>
+                    <input type="radio" asp-for="Member.Gender" value="true" /> Male
+                    <span asp-validation-for="Member.Gender" class="text-danger"></span>
+                </label>
+
+                <label>
+                    <input type="radio" asp-for="Member.Gender" value="false" /> Female
+                    <span asp-validation-for="Member.Gender" class="text-danger"></span>
+                </label>
+
+            </div>
+            <div class="form-group">
+                <label asp-for="Member.Password" class="control-label"></label>
+                <input asp-for="Member.Password" class="form-control" type="password"/>
+                <span asp-validation-for="Member.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Member.Birthday" class="control-label"></label>
+                <input asp-for="Member.Birthday" class="form-control" type="date" min="1900-01-01" max="@DateTime.Now.Date.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="Member.Birthday" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

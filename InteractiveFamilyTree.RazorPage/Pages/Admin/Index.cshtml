@@ -1,0 +1,56 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Admin.IndexModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<h1 class="text-center">Family Trees</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].ModifyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].TotalGeneration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FamilyTree)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                @{
+                    String createDate = item.CreateDate.ToString("yyyy-MM-dd");
+                    String modifyDate = item.ModifyDate.ToString("yyyy-MM-dd");
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => createDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modifyDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalGeneration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

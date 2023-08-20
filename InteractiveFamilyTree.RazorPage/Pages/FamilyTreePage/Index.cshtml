@@ -1,0 +1,64 @@
+﻿@page
+@model             IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-area="" asp-page="./User/Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].ModifyDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].TotalGeneration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyTree[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.FamilyTree) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+                @{
+                    String createDate = item.CreateDate.ToString("yyyy-MM-dd");
+                    String modifyDate = item.ModifyDate.ToString("yyyy-MM-dd");
+                }
+            <td>
+                    @Html.DisplayFor(modelItem => createDate)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => modifyDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalGeneration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

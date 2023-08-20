@@ -1,0 +1,60 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyMemberPage.User.RequestModel
+@{
+}
+
+<h1>Requests</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMembers[0].FullName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMembers[0].Member.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMembers[0].CreateDate)
+            </th>   
+            <th>
+                @Html.DisplayNameFor(model => model.FamilyMembers[0].Birthday)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.FamilyMembers)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.Email)
+                </td>
+                @{
+                    String createDate = item.CreateDate.ToString("yyyy-MM-dd");
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => createDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.Birthday)
+                </td>
+
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="Id" value="@item.Id" />
+                        <!-- First submit button -->
+                        <button type="submit" name="submitButton" value="accept">Accept</button>
+
+                        <!-- Second submit button -->
+                        <button type="submit" name="submitButton" value="reject">Reject</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

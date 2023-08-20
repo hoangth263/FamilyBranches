@@ -1,0 +1,106 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.User.Participants.IndexModel
+
+@{
+    ViewData["Title"] = "Participant List";
+}
+
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+<h1>Participant List</h1>
+
+<p>
+    <a asp-page="/Events/User/Index">Back to List</a>
+</p>
+
+@if (Model.Role == "manager")
+{
+    <p>
+        <button class="btn btn-primary">
+            <a asp-page="Create" asp-route-eventId="@Model.EventId" style="color:white; text-decoration:none;">Add New</a>
+        </button>
+    </p>
+}else if (Model.Role == "member"){
+    <p>
+        <button class="btn btn-primary">
+            <a asp-page-handler="Create" asp-route-eventId="@Model.EventId" style="color:white; text-decoration:none;">Join event</a>
+        </button>
+    </p>
+}
+else
+{
+    <br />
+}
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger">@TempData["Message"]</div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">No. </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.EventParticipant[0].FamilyMember)
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.EventParticipant[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 1;
+        }
+        @foreach (var item in Model.EventParticipant)
+        {
+            <tr>
+                <td class="text-center">@count</td>
+                <td class="text-center">
+                        <a asp-page="/FamilyMemberPage/Details" class="button-link" asp-route-id="@item.Id" style="color: black; text-decoration:none;">@Html.DisplayFor(modelItem => item.FamilyMember.FullName)</a>
+                </td>
+                <td class="text-center"> 
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @if (Model.Role == "manager")
+                    {
+                        if (item.Status != "Invited")
+                        {
+                            <button class="btn btn-primary">
+                                <a asp-page-handler="Edit" asp-route-id="@item.Id" asp-route-eventId="@Model.EventId" style="color: white; text-decoration: none">Edit</a>
+                            </button>
+                        }
+                        <button class="btn btn-primary">
+                            <a asp-page-handler="Delete" asp-route-id="@item.Id" asp-route-eventId="@Model.EventId" style="color: white; text-decoration: none">Remove</a>
+                        </button>
+                    }
+                    else if (Model.FamilyMemberId == item.FamilyMemberId)
+                    {
+                        if (item.Status == "Invited")
+                        {
+                            <button class="btn btn-primary">
+                                <a asp-page-handler="Accept" asp-route-id="@item.Id" asp-route-eventId="@Model.EventId" style="color: white; text-decoration: none">Accept</a>
+                            </button>
+                        }
+                        <button class="btn btn-primary">
+                            <a asp-page-handler="Delete" asp-route-id="@item.Id" asp-route-eventId="@Model.EventId" style="color: white; text-decoration: none">Remove</a>
+                        </button>
+                    }
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>

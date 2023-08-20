@@ -1,0 +1,98 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="~/InteractiveFamilyTree.RazorPage.styles.css" asp-append-version="true" />
+    <!-- Add any other CSS stylesheets or scripts here -->
+    <style>
+        /* Custom styles for the navigation bar and header */
+        .sidebar {
+            height: 100vh;
+            width: 250px; /* Adjust the width of the navigation bar as needed */
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #343a40;
+            color: palevioletred;
+            padding-top: 1rem;
+        }
+
+        .header {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .main-content {
+            margin-left: 250px; /* Adjust the margin to make room for the navigation bar */
+            padding: 1rem; /* Add padding for content spacing */
+        }
+
+        .nav-item.active {
+            background-color: #007bff; /* Customize the active item background color */
+        }
+
+        .nav-item:hover {
+            background-color: burlywood; /* Customize the hover item background color */
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <!-- Blank header with the title "Dashboard" -->
+        <div class="header">
+            Dashboard
+        </div>
+
+        <!-- Left-side navigation bar -->
+        <nav>
+            <ul class="nav flex-column">
+                <li class="nav-item ">
+                    <a class="nav-link text-white " asp-area="" asp-page="/Admin/Index">Trees</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-area="" asp-page="/Admin/Request">Requests</a>
+                </li>
+                <!-- Add more navigation items here -->
+            </ul>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" asp-page="/login" asp-page-handler="Logout">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <!-- Main content -->
+    <div class="main-content">
+        @RenderBody()
+    </div>
+
+    <!-- Add any necessary scripts here -->
+
+    <script>
+        $(document).ready(function () {
+            // Get the current URL path
+            var currentPath = window.location.pathname;
+            // Add 'active' class to the nav item with matching URL path
+            $('.nav-item').each(function () {
+                if ($(this).find('.nav-link').attr('href') === currentPath) {
+                    $(this).addClass('active');
+                }
+            });
+
+            // Add click event listener to the nav items
+            $('.nav-link').on('click', function () {
+                // Remove 'active' class from all nav items
+                $('.nav-item').removeClass('active');
+                // Add 'active' class to the clicked nav item
+                $(this).closest('.nav-item').addClass('active');
+            });
+        });
+    </script>
+</body>
+</html>

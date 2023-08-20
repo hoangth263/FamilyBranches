@@ -1,0 +1,48 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.Participants.IndexModel
+
+@{
+    ViewData["Title"] = "Participant";
+}
+
+<h1 class="text-center">Event Participant</h1>
+
+<p>
+    <a asp-page="/Events/Index">Back to Event List</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventParticipant[0].Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventParticipant[0].Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventParticipant[0].FamilyMember)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EventParticipant) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamilyMember.FullName)
+            </td>
+            <td>
+                @*<a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

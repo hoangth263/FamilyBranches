@@ -1,0 +1,147 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.UserEventModel
+
+@{
+    ViewData["Title"] = "Invited Events";
+}
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+<h1 class="text-center">Invited Events</h1>
+@*<p>
+    <a asp-page="/FamilyTreePage/User/Index">Back to Tree</a>
+</p>*@
+<form asp-page="/UserEvent" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name:
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="/UserEvent">Back to full List</a>
+        </p>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">No. </th>
+            <th>
+                <a asp-page="/UserEvent" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Event Name
+                </a>
+            </th>
+            <th class="text-center">
+                <a asp-page="/UserEvent" asp-route-sortOrder="@Model.DateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    Date
+                </a>
+            </th>
+            <th class="text-center">
+                <a asp-page="/UserEvent" asp-route-sortOrder="@Model.StatusSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    EventStatus
+                </a>
+            </th>
+            <th>
+                Invitation
+            </th>
+            <th class="text-center"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 1;
+        }
+        @foreach (var item in Model.Notifies)
+        {
+            <tr>
+                <td class="text-center">@count</td>
+                <td>
+                    <a asp-page="./Details" class="button-link" asp-route-id="@item.EventId" style="color: black; text-decoration:none;">@Html.DisplayFor(modelItem => item.EventName)</a>
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td class="text-center">
+                    @if (item.Status == true)
+                    {
+                        if (item.Date > DateTime.Now)
+                        {
+                            <p>Pending</p>
+                        }
+                        else if (item.Date <= DateTime.Now)
+                        {
+                            <p>Ongoing</p>
+                        }
+                    }
+                    else
+                    {
+                        if (item.Date > DateTime.Now)
+                        {
+                            <p>Canceled</p>
+                        }
+                        else if (item.Date < DateTime.Now)
+                        {
+                            <p>Completed</p>
+                        }
+                    }
+                </td>
+                <td>
+                    @if (item.MemberStatus == "Invited")
+                    {
+                        <p>Not Accepted</p>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.MemberStatus)
+                    }
+                </td>
+                <td>
+                    @if (item.MemberStatus == "Invited")
+                    {
+                        <button class="btn btn-primary">
+                            <a asp-page-handler="Accept" asp-route-eventId="@item.EventId" style="color: white; text-decoration: none">Accept</a>
+                        </button>
+                    }
+                    <button class="btn btn-primary">
+                        <a asp-page-handler="Delete" asp-route-eventId="@item.EventId" style="color: white; text-decoration: none">Remove</a>
+                    </button>
+
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.Notifies.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Notifies.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="/UserEvent"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Notifies.PageIndex - 1)"
+   asp-route-currentFilter=@Model.CurrentFilter
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="/UserEvent"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.Notifies.PageIndex + 1)"
+   asp-route-currentFilter=@Model.CurrentFilter
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

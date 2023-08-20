@@ -1,0 +1,79 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.User.DeleteModel
+
+@{
+    ViewData["Title"] = "Event";
+}
+
+<h1 class="text-center">Delete</h1>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FamilyEvent</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FamilyEvent.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FamilyEvent.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FamilyEvent.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FamilyEvent.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FamilyEvent.Type)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.FamilyEvent.Type == true)
+            {
+                <p>Annual</p>
+            }
+            else
+            {
+                <p>Once</p>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FamilyEvent.Date)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FamilyEvent.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FamilyEvent.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.FamilyEvent.Status == true)
+            {
+                if (Model.FamilyEvent.Date > DateTime.Now)
+                {
+                    <p>Pending</p>
+                }
+                else if (Model.FamilyEvent.Date <= DateTime.Now)
+                {
+                    <p>Ongoing</p>
+                }
+            }
+            else
+            {
+                if (Model.FamilyEvent.Date > DateTime.Now)
+                {
+                    <p>Canceled</p>
+                }
+                else if (Model.FamilyEvent.Date < DateTime.Now)
+                {
+                    <p>Completed</p>
+                }
+            }
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="FamilyEvent.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Details" asp-route-id="@Model.FamilyEvent.Id">Cancel</a>
+    </form>
+</div>

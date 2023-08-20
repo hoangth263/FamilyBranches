@@ -1,0 +1,75 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Interactive Tree</h1>
+@if (Model.FamilyTree == null || !Model.FamilyTree.Status)
+{
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+}
+else if (Model.FamilyTree.Status)
+{
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FamilyTree.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FamilyTree.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FamilyTree.ModifyDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FamilyTree.TotalGeneration)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FamilyTree.Status)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.FamilyTree.FirstName)
+                </td>
+                @{
+                    String createDate = Model.FamilyTree.CreateDate.ToString("yyyy-MM-dd");
+                    String modifyDate = Model.FamilyTree.ModifyDate.ToString("yyyy-MM-dd");
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => createDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modifyDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.FamilyTree.TotalGeneration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.FamilyTree.Status)
+                </td>
+                <td>
+                    <a asp-page="/Events/User/Index">Events</a> | 
+
+                    <a asp-page="/FamilyMemberPage/User/Index">Member</a> | 
+
+                    @if (Model.Role == "manager")
+                    {
+                        <a asp-page="./Edit" asp-route-id="@Model.FamilyTree.Id">Edit</a> 
+                        @*<a asp-page="./Delete" asp-route-id="@Model.FamilyTree.Id">Delete</a>*@
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

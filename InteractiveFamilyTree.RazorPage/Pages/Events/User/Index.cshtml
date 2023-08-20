@@ -1,0 +1,159 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.User.IndexModel
+
+@{
+    ViewData["Title"] = "Events";
+}
+<style>
+    .button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: white;
+        color: black;
+        text-decoration: none;
+        border-radius: 4px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+<h1  class="text-center">Events</h1>
+<p>
+    <a asp-page="/FamilyTreePage/User/Index">Back to Tree</a>
+</p>
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: 
+            <input type="text" name="SearchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+@if (Model.Role == "manager")
+{
+    <p>
+        <button class="btn btn-primary">
+            <a asp-page="Create" style="color:white; text-decoration:none;">Create New</a>
+        </button>
+    </p>
+}else{
+    <br/>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th class="text-center">No. </th>
+            <th >
+                <a asp-page="./Index" asp-route-sortOrder="@Model.NameSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                    @Html.DisplayNameFor(model => model.FamilyEvent[0].Name)
+                </a>
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.FamilyEvent[0].Description)
+            </th>*@
+            <th class="text-center">
+                @Html.DisplayNameFor(model => model.FamilyEvent[0].Type)
+            </th class="text-center">
+            <th class="text-center">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                @Html.DisplayNameFor(model => model.FamilyEvent[0].Date)
+                </a>
+            </th>
+            <th class="text-center">
+                <a asp-page="./Index" asp-route-sortOrder="@Model.StatusSort"
+                   asp-route-currentFilter="@Model.CurrentFilter">
+                @Html.DisplayNameFor(model => model.FamilyEvent[0].Status)
+                </a>
+            </th>
+            @*<th>
+            @Html.DisplayNameFor(model => model.FamilyEvent[0].Tree)
+            </th>*@
+            <th class="text-center">Participant List</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 1;
+        }
+        @foreach (var item in Model.FamilyEvent)
+        {
+            <tr>
+                <td class="text-center">@count</td>
+                <td >
+                        <a asp-page="./Details" class="button-link" asp-route-id="@item.Id" style="color: black; text-decoration:none;">@Html.DisplayFor(modelItem => item.Name)</a>
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Description)
+            </td>*@
+                <td class="text-center">
+                    @if (item.Type == true)
+                    {
+                        <p>Annual</p>
+                    }
+                    else
+                    {
+                        <p>Once</p>
+                    }
+                </td>
+                <td class="text-center">
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td class="text-center">
+                    @if (item.Status == true)
+                    {
+                        if (item.Date > DateTime.Now)
+                        {
+                            <p>Pending</p>
+                        }
+                        else if (item.Date <= DateTime.Now)
+                        {
+                            <p>Ongoing</p>
+                        }
+                    }
+                    else
+                    {
+                        if (item.Date > DateTime.Now)
+                        {
+                            <p>Canceled</p>
+                        }
+                        else if (item.Date < DateTime.Now)
+                        {
+                            <p>Completed</p>
+                        }
+                    }
+                </td>
+                @*<td>
+            @Html.DisplayFor(modelItem => item.Tree.FirstName)
+            </td>*@
+                <td class="text-center">
+                        <a asp-page="/Events/User/Participants/Index" asp-route-eventId="@item.Id" style="color: black; text-decoration:none;"><img src="/images/list-svgrepo-com.svg" width="25" height="25"/></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.FamilyEvent.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.FamilyEvent.HasNextPage ? "disabled" : "";
+}
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.FamilyEvent.PageIndex - 1)"
+   asp-route-currentFilter=@Model.CurrentFilter
+   class="btn btn-primary @prevDisabled">
+    Previous
+</a>
+
+<a asp-page="./Index"
+   asp-route-sortOrder="@Model.CurrentSort"
+   asp-route-pageIndex="@(Model.FamilyEvent.PageIndex + 1)"
+   asp-route-currentFilter=@Model.CurrentFilter
+   class="btn btn-primary @nextDisabled">
+    Next
+</a>

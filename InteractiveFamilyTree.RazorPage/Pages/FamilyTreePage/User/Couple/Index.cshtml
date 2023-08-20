@@ -1,0 +1,58 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.FamilyTreePage.User.Couple.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CoupleRelationship[0].CreateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoupleRelationship[0].UpdateDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoupleRelationship[0].MarrageStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoupleRelationship[0].Husband)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CoupleRelationship[0].Wife)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.CoupleRelationship) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarrageStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Husband.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Wife.FullName)
+            </td>
+            <td>
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

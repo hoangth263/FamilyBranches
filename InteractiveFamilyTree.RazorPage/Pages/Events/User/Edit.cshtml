@@ -1,0 +1,64 @@
+﻿@page
+@model InteractiveFamilyTree.RazorPage.Pages.Events.User.EditModel
+
+@{
+    ViewData["Title"] = "Event";
+}
+
+<h2 class="text-center">Edit</h2>
+
+<h4>FamilyEvent</h4>
+<p>
+    <a asp-page="./Index">Back to List</a>
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="FamilyEvent.Id" />
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Name" class="control-label"></label>
+                <input asp-for="FamilyEvent.Name" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Description" class="control-label"></label>
+                <input asp-for="FamilyEvent.Description" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Type" class="control-label"></label>
+                <select asp-for="FamilyEvent.Type" class="form-control" >
+                    <option value="True">Annual</option>
+                    <option Value="False">Once</option>
+                </select>
+                <span asp-validation-for="FamilyEvent.Type" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Date" class="control-label"></label>
+                <input asp-for="FamilyEvent.Date" class="form-control" />
+                <span asp-validation-for="FamilyEvent.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FamilyEvent.Status" class="control-label"></label>
+                <select asp-for="FamilyEvent.Status" class="form-control" >
+                    <option selected>True</option>
+                    <option>False</option>
+                </select>
+                <span asp-validation-for="FamilyEvent.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Details" asp-route-id="@Model.FamilyEvent.Id">Cancel</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
